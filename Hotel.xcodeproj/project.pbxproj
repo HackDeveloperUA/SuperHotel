@@ -9,11 +9,12 @@
 /* Begin PBXBuildFile section */
 		6CB312141B68E35000B49DA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB312131B68E35000B49DA5 /* main.m */; };
 		6CB312171B68E35000B49DA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB312161B68E35000B49DA5 /* AppDelegate.m */; };
-		6CB3121A1B68E35000B49DA5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB312191B68E35000B49DA5 /* ViewController.m */; };
 		6CB3121D1B68E35000B49DA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CB3121B1B68E35000B49DA5 /* Main.storyboard */; };
 		6CB3121F1B68E35000B49DA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CB3121E1B68E35000B49DA5 /* Images.xcassets */; };
 		6CB312221B68E35000B49DA5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB312201B68E35000B49DA5 /* LaunchScreen.xib */; };
 		6CB3122E1B68E35000B49DA5 /* HotelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3122D1B68E35000B49DA5 /* HotelTests.m */; };
+		6CB312391B68EBDF00B49DA5 /* ASMainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */; };
+		6CB3123C1B68EC5B00B49DA5 /* ASHotel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */; };
 		86402E9E0CDF8DA8BCAD6DB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4BA6557A94FA7A28CF7291 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -35,14 +36,16 @@
 		6CB312131B68E35000B49DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6CB312151B68E35000B49DA5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6CB312161B68E35000B49DA5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		6CB312181B68E35000B49DA5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		6CB312191B68E35000B49DA5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		6CB3121C1B68E35000B49DA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6CB3121E1B68E35000B49DA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6CB312211B68E35000B49DA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		6CB312271B68E35000B49DA5 /* HotelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HotelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB3122C1B68E35000B49DA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CB3122D1B68E35000B49DA5 /* HotelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotelTests.m; sourceTree = "<group>"; };
+		6CB312371B68EBDF00B49DA5 /* ASMainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASMainTableViewController.h; sourceTree = "<group>"; };
+		6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMainTableViewController.m; sourceTree = "<group>"; };
+		6CB3123A1B68EC5B00B49DA5 /* ASHotel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHotel.h; sourceTree = "<group>"; };
+		6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHotel.m; sourceTree = "<group>"; };
 		9E7189D3F2B6423BDFE9D5FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,8 +108,10 @@
 		6CB312101B68E35000B49DA5 /* Hotel */ = {
 			isa = PBXGroup;
 			children = (
-				6CB312181B68E35000B49DA5 /* ViewController.h */,
-				6CB312191B68E35000B49DA5 /* ViewController.m */,
+				6CB312371B68EBDF00B49DA5 /* ASMainTableViewController.h */,
+				6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */,
+				6CB3123A1B68EC5B00B49DA5 /* ASHotel.h */,
+				6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */,
 				6CB3121B1B68E35000B49DA5 /* Main.storyboard */,
 				6CB312111B68E35000B49DA5 /* Supporting Files */,
 			);
@@ -278,8 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CB3121A1B68E35000B49DA5 /* ViewController.m in Sources */,
+				6CB3123C1B68EC5B00B49DA5 /* ASHotel.m in Sources */,
 				6CB312171B68E35000B49DA5 /* AppDelegate.m in Sources */,
+				6CB312391B68EBDF00B49DA5 /* ASMainTableViewController.m in Sources */,
 				6CB312141B68E35000B49DA5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

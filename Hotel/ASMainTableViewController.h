@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ASMainTableViewController.h
 //  Hotel
 //
 //  Created by MD on 29.07.15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface ASMainTableViewController : UIViewController
 
 @end
-
