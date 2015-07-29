@@ -17,7 +17,7 @@
 @property (assign,nonatomic) double stars;
 @property (assign,nonatomic) double distance;
 
-@property (strong,nonatomic) NSString* suitesAvailabilityString;
+//@property (strong,nonatomic) NSString* suitesAvailabilityString;
 @property (strong,nonatomic) NSArray*  suitesAvailabilityArray;
 
 

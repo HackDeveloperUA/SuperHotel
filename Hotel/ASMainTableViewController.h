@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface ASMainTableViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
+
+
+@property (strong, nonatomic)  NSOperation*     operation;
+
+
+
+- (IBAction)segmentControlAction:(UISegmentedControl *)sender;
 
 @end
