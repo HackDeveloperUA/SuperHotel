@@ -14,6 +14,7 @@
 		6CB3121F1B68E35000B49DA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CB3121E1B68E35000B49DA5 /* Images.xcassets */; };
 		6CB312221B68E35000B49DA5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CB312201B68E35000B49DA5 /* LaunchScreen.xib */; };
 		6CB3122E1B68E35000B49DA5 /* HotelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3122D1B68E35000B49DA5 /* HotelTests.m */; };
+		86402E9E0CDF8DA8BCAD6DB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4BA6557A94FA7A28CF7291 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D4BA6557A94FA7A28CF7291 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		54094F128A0B470F16085173 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		6CB3120E1B68E35000B49DA5 /* Hotel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hotel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB312121B68E35000B49DA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CB312131B68E35000B49DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +43,7 @@
 		6CB312271B68E35000B49DA5 /* HotelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HotelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB3122C1B68E35000B49DA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CB3122D1B68E35000B49DA5 /* HotelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HotelTests.m; sourceTree = "<group>"; };
+		9E7189D3F2B6423BDFE9D5FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86402E9E0CDF8DA8BCAD6DB8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +65,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04BF3A171ED1B628306BD5D4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D4BA6557A94FA7A28CF7291 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		492C646202BBD051AAE99D6C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				54094F128A0B470F16085173 /* Pods.debug.xcconfig */,
+				9E7189D3F2B6423BDFE9D5FA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6CB312051B68E35000B49DA5 = {
 			isa = PBXGroup;
 			children = (
 				6CB312101B68E35000B49DA5 /* Hotel */,
 				6CB3122A1B68E35000B49DA5 /* HotelTests */,
 				6CB3120F1B68E35000B49DA5 /* Products */,
+				492C646202BBD051AAE99D6C /* Pods */,
+				04BF3A171ED1B628306BD5D4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,13 +105,9 @@
 		6CB312101B68E35000B49DA5 /* Hotel */ = {
 			isa = PBXGroup;
 			children = (
-				6CB312151B68E35000B49DA5 /* AppDelegate.h */,
-				6CB312161B68E35000B49DA5 /* AppDelegate.m */,
 				6CB312181B68E35000B49DA5 /* ViewController.h */,
 				6CB312191B68E35000B49DA5 /* ViewController.m */,
 				6CB3121B1B68E35000B49DA5 /* Main.storyboard */,
-				6CB3121E1B68E35000B49DA5 /* Images.xcassets */,
-				6CB312201B68E35000B49DA5 /* LaunchScreen.xib */,
 				6CB312111B68E35000B49DA5 /* Supporting Files */,
 			);
 			path = Hotel;
@@ -96,7 +116,11 @@
 		6CB312111B68E35000B49DA5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6CB312151B68E35000B49DA5 /* AppDelegate.h */,
+				6CB312161B68E35000B49DA5 /* AppDelegate.m */,
 				6CB312121B68E35000B49DA5 /* Info.plist */,
+				6CB312201B68E35000B49DA5 /* LaunchScreen.xib */,
+				6CB3121E1B68E35000B49DA5 /* Images.xcassets */,
 				6CB312131B68E35000B49DA5 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -126,9 +150,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6CB312311B68E35000B49DA5 /* Build configuration list for PBXNativeTarget "Hotel" */;
 			buildPhases = (
+				59F1421D11FE4A8124AF3E8A /* Check Pods Manifest.lock */,
 				6CB3120A1B68E35000B49DA5 /* Sources */,
 				6CB3120B1B68E35000B49DA5 /* Frameworks */,
 				6CB3120C1B68E35000B49DA5 /* Resources */,
+				A92652D7F527450B82CC4A80 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -213,6 +239,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		59F1421D11FE4A8124AF3E8A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A92652D7F527450B82CC4A80 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6CB3120A1B68E35000B49DA5 /* Sources */ = {
@@ -347,6 +406,7 @@
 		};
 		6CB312321B68E35000B49DA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54094F128A0B470F16085173 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Hotel/Info.plist;
@@ -357,6 +417,7 @@
 		};
 		6CB312331B68E35000B49DA5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E7189D3F2B6423BDFE9D5FA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Hotel/Info.plist;
@@ -418,6 +479,7 @@
 				6CB312331B68E35000B49DA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6CB312341B68E35000B49DA5 /* Build configuration list for PBXNativeTarget "HotelTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +488,7 @@
 				6CB312361B68E35000B49DA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
