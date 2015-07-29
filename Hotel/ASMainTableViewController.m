@@ -24,8 +24,7 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 @interface ASMainTableViewController ()
 
-@property (strong, nonatomic) NSArray* arrayHotels;
-@property (strong, nonatomic) UIActivityIndicatorView* indicator;
+
 @end
 
 
@@ -36,24 +35,30 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     [super viewDidLoad];
    
     
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc]
+                                              initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
     indicatorView.center = self.view.center;
-    self.indicator = indicatorView;
+    self.indicator       = indicatorView;
+   
     [self.view addSubview:self.indicator];
 
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        /* Код, который должен выполниться в фоне */
         [self.indicator startAnimating];
         [self simpleJsonParsing];
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            /* Код, который выполниться в главном потоке */
             [self.tableView reloadData];
             [self.indicator stopAnimating];
 
         });
     });
+    
+    ////////
+    
+    //[self simpleJsonParsing];
+    [self.segmentControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
     
 }
 
@@ -62,27 +67,7 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     // Dispose of any resources that can be recreated.
 }
 
-/*
- @property (assign,nonatomic) double id;
- @property (strong,nonatomic) NSString* name;
- @property (strong,nonatomic) NSString* address;
- 
- @property (assign,nonatomic) double stars;
- @property (assign,nonatomic) double distance;
- @property (strong,nonatomic) NSArray* suitesAvailability;
- 
- 
- 
- */
-/*
- "id": 40611,
- "name": "Belleclaire Hotel",
- "address": "250 West 77th Street, Manhattan",
- "stars": 3.0,
- "distance": 100.0,
- "suites_availability": "1:44:21:87:99:34"
- 
- */
+
 #pragma mark - Parsing
 
 - (void)simpleJsonParsing
@@ -113,8 +98,7 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
         [arr addObject:hotel];
     }
     self.arrayHotels = arr;
-    
-    
+    self.sortingArrayHotels = [NSArray arrayWithArray:arr];
     NSLog(@"This is arrrr !!!! %@",arr);
     
     for (ASHotel* obj in arr) {
@@ -139,7 +123,8 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [self.arrayHotels count];
+    //return [self.arrayHotels count];
+    return [self.sortingArrayHotels count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -154,13 +139,83 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     }
     
     
-    cell.textLabel.text       = [[self.arrayHotels objectAtIndex:indexPath.row]name];
-    cell.detailTextLabel.text = [[self.arrayHotels objectAtIndex:indexPath.row]address];
-   
+    //cell.textLabel.text       = [[self.arrayHotels objectAtIndex:indexPath.row]name];
+    //cell.detailTextLabel.text = [[self.arrayHotels objectAtIndex:indexPath.row]address];
     //cell.imageView.image = [UIImage imageNamed:@"flower.png"];
+    
+    cell.textLabel.text       = [[self.sortingArrayHotels objectAtIndex:indexPath.row]name];
+   // cell.detailTextLabel.text = [[self.sortingArrayHotels objectAtIndex:indexPath.row]address];
+   
+    //NSString* str = [NSString stringWithFormat:@"%d",(NSInteger)[[self.sortingArrayHotels objectAtIndex:indexPath.row]distance]];
+    //cell.detailTextLabel.text = str;
+    NSString* str = [[[self.sortingArrayHotels objectAtIndex:indexPath.row] valueForKeyPath:@"suitesAvailabilityArray.@count"] stringValue];
+    NSLog(@"str = %@",str);
+    cell.detailTextLabel.text = str;
+
+    //cell.detailTextLabel.text = [[self.sortingArrayHotels objectAtIndex:indexPath.row] valueForKeyPath:@"suitesAvailabilityArray.@count"];
+    
+    
     cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
+}
+
+
+#pragma mark - Sorting Array
+
+
+-(void) generateSectionsInBackgroundFromArray:(NSArray*) array  {
+    
+    
+    [self.operation cancel];
+    
+    __weak ASMainTableViewController* weakSelf = self;
+    
+    self.operation = [NSBlockOperation blockOperationWithBlock:^{
+        
+        [self.indicator startAnimating];
+        
+        weakSelf.sortingArrayHotels = [NSArray array];
+        [weakSelf.tableView reloadData];
+        
+        NSArray* sortingArray = [weakSelf generateSectionFromArray:array];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            weakSelf.sortingArrayHotels = sortingArray;
+            [weakSelf.tableView reloadData];
+            [self.indicator stopAnimating];
+            self.operation = nil;
+        });
+    }];
+    [self.operation start];
+    
+}
+
+
+
+-(NSArray*) generateSectionFromArray:(NSArray*) array {
+    
+    
+    NSArray* sortingArray = [NSMutableArray array];
+    
+   // NSSortDescriptor* sortByDistance    = [NSSortDescriptor sortDescriptorWithKey:@"distance"  ascending:YES];
+  //  NSSortDescriptor* sortByFreeRooms   = [NSSortDescriptor sortDescriptorWithKey:@"name"   ascending:YES];
+    
+    NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+    NSSortDescriptor *sd2 = [[NSSortDescriptor alloc] initWithKey:@"suitesAvailabilityArray.@count" ascending:YES];
+
+
+
+    if (self.segmentControl.selectedSegmentIndex == ASSortedDistance) {
+        
+       sortingArray = [array sortedArrayUsingDescriptors:@[sd]];
+    }else
+     {
+        //sortByDistance  = nil;
+        sortingArray = [array sortedArrayUsingDescriptors:@[sd2]];
+     }
+    return sortingArray;
 }
 
 
@@ -169,10 +224,12 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 
 - (IBAction)segmentControlAction:(UISegmentedControl *)sender {
+   
     [self.operation cancel];
     self.operation = nil;
     
    // [self generateSectionsInBackgroundFromArray:self.arrayStudents withFilter:self.searchBar.text];
+    [self generateSectionsInBackgroundFromArray:self.arrayHotels];
 
 }
 

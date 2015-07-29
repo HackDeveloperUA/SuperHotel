@@ -14,10 +14,12 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
-
+@property (strong, nonatomic)  UIActivityIndicatorView* indicator;
 
 @property (strong, nonatomic)  NSOperation*     operation;
 
+@property (strong, nonatomic)  NSArray* arrayHotels;
+@property (strong, nonatomic)  NSArray* sortingArrayHotels;
 
 
 - (IBAction)segmentControlAction:(UISegmentedControl *)sender;
