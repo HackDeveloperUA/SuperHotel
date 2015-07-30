@@ -18,8 +18,8 @@
 
 @property (strong, nonatomic)  NSOperation*     operation;
 
-@property (strong, nonatomic)  NSArray* arrayHotels;
-@property (strong, nonatomic)  NSArray* sortingArrayHotels;
+@property (strong, nonatomic)  NSMutableArray* arrayHotels;
+@property (strong, nonatomic)  NSMutableArray* sortingArrayHotels;
 
 
 - (IBAction)segmentControlAction:(UISegmentedControl *)sender;

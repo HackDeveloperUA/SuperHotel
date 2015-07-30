@@ -10,4 +10,13 @@
 
 @implementation ASHotel
 
+- (NSString *)description {
+    NSString *descriptionString = [NSString stringWithFormat:@"\n------------\n\nName: %@;\n Address: %@;\n Stars: %f;\n Image: %@;\n Distance: %f\n\n\n",
+                                   self.name,  self.address,
+                                   self.stars, self.imageString,
+                                   self.distance];
+    return descriptionString;
+    
+}
+
 @end
