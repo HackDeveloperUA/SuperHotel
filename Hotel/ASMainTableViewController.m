@@ -7,11 +7,12 @@
 //
 
 #import "ASMainTableViewController.h"
+#import "ASDetailsViewController.h"
 #import "ASHotel.h"
 
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "ASCustomCellMainTable.h"
 
 
 typedef NS_ENUM(NSInteger, ASSortedSegment) {
@@ -72,9 +73,11 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 - (void)simpleJsonParsing
 {
-    
    
-    NSString *requestString = @"https://dl.dropboxusercontent.com/u/109052005/1/0777.json";
+   
+   // NSString *requestString = @"https://dl.dropboxusercontent.com/u/109052005/1/0777.json";
+    NSString *requestString = @"https://dl.dropboxusercontent.com/s/5mssly9c1z78oqu/hotelList.json";
+   // NSString *requestString = @" https://dl.dropboxusercontent.com/s/8si0gwcwl1fj1d0/hotelList2.json";
     
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:requestString]];
     
@@ -91,6 +94,7 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
         hotel.name           = [dict  valueForKey:@"name"];
         hotel.address        = [dict  valueForKey:@"address"];
         hotel.stars          = [[dict valueForKey:@"stars"] doubleValue];
+        hotel.imageString          = [dict valueForKey:@"image"];
         hotel.distance       = [[dict valueForKey:@"distance"] doubleValue];
         NSString* tmpFreeRooms =  [dict  valueForKey:@"suites_availability"];
         hotel.suitesAvailabilityArray  = [tmpFreeRooms componentsSeparatedByString:@":"];
@@ -107,11 +111,36 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
         NSLog(@"Name          = %@",obj.name);
         NSLog(@"Address       = %@",obj.address);
         NSLog(@"Stars         = %f",obj.stars);
+        NSLog(@"Image         = %@",obj.imageString);
         NSLog(@"Distance      = %f",obj.distance);
         NSLog(@"Suites_availabilityArray = %@",obj.suitesAvailabilityArray);
     }
  
 
+}
+
+
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ASDetailsViewController *vc2 = (ASDetailsViewController *)[storyboard  instantiateViewControllerWithIdentifier:@"ASDetailsViewController"];
+    
+    ASHotel* obj = [self.sortingArrayHotels objectAtIndex:indexPath.row];
+    vc2.hotel = obj;
+    
+    [self.navigationController pushViewController:vc2 animated:YES];
+    
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 60;
 }
 
 #pragma mark - UITableViewDataSource
@@ -127,8 +156,14 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     return [self.sortingArrayHotels count];
 }
 
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [cell layoutIfNeeded];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   
+   /*
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -136,26 +171,51 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                         reuseIdentifier:CellIdentifier];
+        // cell.contentMode = UIViewContentModeScaleAspectFit;;
+
+    }
+    
+
+    NSString* urlPhoto   = (NSString*)[[self.sortingArrayHotels objectAtIndex:indexPath.row]image];
+    NSURL*    url        = [[NSURL alloc]initWithString:urlPhoto];
+    UIImage* placeholder = [UIImage imageNamed:@"placeholder.png"];
+
+    cell.textLabel.text       = [[self.sortingArrayHotels objectAtIndex:indexPath.row]name];
+    cell.detailTextLabel.text = (NSString*)[[self.sortingArrayHotels objectAtIndex:indexPath.row]address];
+   // cell.imageView.image = placeholder;
+     cell.imageView.contentMode = UIViewContentModeScaleAspectFit | UIViewContentModeCenter;
+    [cell.imageView setImageWithURL:url placeholderImage:placeholder];
+    //[cell.imageView setNeedsDisplay];
+    
+    cell.imageView.layer.cornerRadius = 17;
+    cell.imageView.layer.masksToBounds = YES;
+    
+    
+    //cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
+    */
+    
+    
+    static NSString *CellIdentifier = @"customCell";
+    
+    ASCustomCellMainTable *cell = (ASCustomCellMainTable *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (cell == nil) {
+        cell = [[ASCustomCellMainTable alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     
-    //cell.textLabel.text       = [[self.arrayHotels objectAtIndex:indexPath.row]name];
-    //cell.detailTextLabel.text = [[self.arrayHotels objectAtIndex:indexPath.row]address];
-    //cell.imageView.image = [UIImage imageNamed:@"flower.png"];
-    
-    cell.textLabel.text       = [[self.sortingArrayHotels objectAtIndex:indexPath.row]name];
-   // cell.detailTextLabel.text = [[self.sortingArrayHotels objectAtIndex:indexPath.row]address];
-   
-    //NSString* str = [NSString stringWithFormat:@"%d",(NSInteger)[[self.sortingArrayHotels objectAtIndex:indexPath.row]distance]];
-    //cell.detailTextLabel.text = str;
-    NSString* str = [[[self.sortingArrayHotels objectAtIndex:indexPath.row] valueForKeyPath:@"suitesAvailabilityArray.@count"] stringValue];
-    NSLog(@"str = %@",str);
-    cell.detailTextLabel.text = str;
+    NSString* urlPhoto   = (NSString*)[[self.sortingArrayHotels objectAtIndex:indexPath.row]imageString];
+    NSURL*    url        = [[NSURL alloc]initWithString:urlPhoto];
+    UIImage* placeholder = [UIImage imageNamed:@"placeholder.png"];
 
-    //cell.detailTextLabel.text = [[self.sortingArrayHotels objectAtIndex:indexPath.row] valueForKeyPath:@"suitesAvailabilityArray.@count"];
-    
-    
-    cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
+    cell.name.text = [[self.sortingArrayHotels objectAtIndex:indexPath.row]name];
+    cell.address.text = (NSString*)[[self.sortingArrayHotels objectAtIndex:indexPath.row]address];
+   
+    cell.image.layer.cornerRadius = 20;
+    cell.image.layer.masksToBounds = YES;
+    //cell.imageView.contentMode = UIViewContentModeScaleAspectFit | UIViewContentModeCenter;
+    [cell.image setImageWithURL:url placeholderImage:placeholder];
+
     
     return cell;
 }
@@ -183,9 +243,12 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
         dispatch_async(dispatch_get_main_queue(), ^{
            
             weakSelf.sortingArrayHotels = sortingArray;
-            [weakSelf.tableView reloadData];
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+
             [self.indicator stopAnimating];
             self.operation = nil;
+            
+            
         });
     }];
     [self.operation start];
@@ -198,26 +261,21 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     
     
     NSArray* sortingArray = [NSMutableArray array];
-    
-   // NSSortDescriptor* sortByDistance    = [NSSortDescriptor sortDescriptorWithKey:@"distance"  ascending:YES];
-  //  NSSortDescriptor* sortByFreeRooms   = [NSSortDescriptor sortDescriptorWithKey:@"name"   ascending:YES];
-    
-    NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
-    NSSortDescriptor *sd2 = [[NSSortDescriptor alloc] initWithKey:@"suitesAvailabilityArray.@count" ascending:YES];
 
+    NSSortDescriptor *sortByDistance = [[NSSortDescriptor alloc] initWithKey:@"distance" ascending:YES];
+    NSSortDescriptor *sortByFreeRooms = [[NSSortDescriptor alloc] initWithKey:@"suitesAvailabilityArray.@count" ascending:NO];
 
 
     if (self.segmentControl.selectedSegmentIndex == ASSortedDistance) {
         
-       sortingArray = [array sortedArrayUsingDescriptors:@[sd]];
+       sortingArray = [array sortedArrayUsingDescriptors:@[sortByDistance]];
     }else
      {
-        //sortByDistance  = nil;
-        sortingArray = [array sortedArrayUsingDescriptors:@[sd2]];
+        sortingArray = [array sortedArrayUsingDescriptors:@[sortByFreeRooms]];
      }
+    
     return sortingArray;
 }
-
 
 
 
@@ -226,9 +284,8 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 - (IBAction)segmentControlAction:(UISegmentedControl *)sender {
    
     [self.operation cancel];
-    self.operation = nil;
+     self.operation = nil;
     
-   // [self generateSectionsInBackgroundFromArray:self.arrayStudents withFilter:self.searchBar.text];
     [self generateSectionsInBackgroundFromArray:self.arrayHotels];
 
 }

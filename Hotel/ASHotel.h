@@ -18,6 +18,7 @@
 @property (assign,nonatomic) double distance;
 
 //@property (strong,nonatomic) NSString* suitesAvailabilityString;
+@property (strong,nonatomic) NSString* imageString;
 @property (strong,nonatomic) NSArray*  suitesAvailabilityArray;
 
 
