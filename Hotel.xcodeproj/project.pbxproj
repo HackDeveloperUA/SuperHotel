@@ -16,7 +16,6 @@
 		6CB3122E1B68E35000B49DA5 /* HotelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3122D1B68E35000B49DA5 /* HotelTests.m */; };
 		6CB312391B68EBDF00B49DA5 /* ASMainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */; };
 		6CB3123C1B68EC5B00B49DA5 /* ASHotel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */; };
-		6CB312411B696D2500B49DA5 /* 78-128.png in Resources */ = {isa = PBXBuildFile; fileRef = 6CB312401B696D2500B49DA5 /* 78-128.png */; };
 		6CB312441B69774B00B49DA5 /* ASCustomCellMainTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CB312431B69774B00B49DA5 /* ASCustomCellMainTable.m */; };
 		86402E9E0CDF8DA8BCAD6DB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4BA6557A94FA7A28CF7291 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -51,7 +50,6 @@
 		6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASMainTableViewController.m; sourceTree = "<group>"; };
 		6CB3123A1B68EC5B00B49DA5 /* ASHotel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASHotel.h; sourceTree = "<group>"; };
 		6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASHotel.m; sourceTree = "<group>"; };
-		6CB312401B696D2500B49DA5 /* 78-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "78-128.png"; sourceTree = SOURCE_ROOT; };
 		6CB312421B69774B00B49DA5 /* ASCustomCellMainTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASCustomCellMainTable.h; sourceTree = "<group>"; };
 		6CB312431B69774B00B49DA5 /* ASCustomCellMainTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASCustomCellMainTable.m; sourceTree = "<group>"; };
 		9E7189D3F2B6423BDFE9D5FA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -93,6 +91,42 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6C96DFFF1B6A1C4D0007DCEB /* Main TVC */ = {
+			isa = PBXGroup;
+			children = (
+				6CB312371B68EBDF00B49DA5 /* ASMainTableViewController.h */,
+				6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */,
+			);
+			name = "Main TVC";
+			sourceTree = "<group>";
+		};
+		6C96E0001B6A1C560007DCEB /* ASHotel */ = {
+			isa = PBXGroup;
+			children = (
+				6CB3123A1B68EC5B00B49DA5 /* ASHotel.h */,
+				6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */,
+			);
+			name = ASHotel;
+			sourceTree = "<group>";
+		};
+		6C96E0011B6A1C5F0007DCEB /* Custom Cell MainTable */ = {
+			isa = PBXGroup;
+			children = (
+				6CB312421B69774B00B49DA5 /* ASCustomCellMainTable.h */,
+				6CB312431B69774B00B49DA5 /* ASCustomCellMainTable.m */,
+			);
+			name = "Custom Cell MainTable";
+			sourceTree = "<group>";
+		};
+		6C96E0021B6A1C670007DCEB /* Details VC */ = {
+			isa = PBXGroup;
+			children = (
+				6C96DFFC1B69F3CB0007DCEB /* ASDetailsViewController.h */,
+				6C96DFFD1B69F3CB0007DCEB /* ASDetailsViewController.m */,
+			);
+			name = "Details VC";
+			sourceTree = "<group>";
+		};
 		6CB312051B68E35000B49DA5 = {
 			isa = PBXGroup;
 			children = (
@@ -116,16 +150,11 @@
 		6CB312101B68E35000B49DA5 /* Hotel */ = {
 			isa = PBXGroup;
 			children = (
-				6CB312371B68EBDF00B49DA5 /* ASMainTableViewController.h */,
-				6CB312381B68EBDF00B49DA5 /* ASMainTableViewController.m */,
-				6CB3123A1B68EC5B00B49DA5 /* ASHotel.h */,
-				6CB3123B1B68EC5B00B49DA5 /* ASHotel.m */,
-				6CB312421B69774B00B49DA5 /* ASCustomCellMainTable.h */,
-				6CB312431B69774B00B49DA5 /* ASCustomCellMainTable.m */,
-				6C96DFFC1B69F3CB0007DCEB /* ASDetailsViewController.h */,
-				6C96DFFD1B69F3CB0007DCEB /* ASDetailsViewController.m */,
+				6C96DFFF1B6A1C4D0007DCEB /* Main TVC */,
+				6C96E0001B6A1C560007DCEB /* ASHotel */,
+				6C96E0011B6A1C5F0007DCEB /* Custom Cell MainTable */,
+				6C96E0021B6A1C670007DCEB /* Details VC */,
 				6CB3121B1B68E35000B49DA5 /* Main.storyboard */,
-				6CB312401B696D2500B49DA5 /* 78-128.png */,
 				6CB312111B68E35000B49DA5 /* Supporting Files */,
 			);
 			path = Hotel;
@@ -243,7 +272,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CB312411B696D2500B49DA5 /* 78-128.png in Resources */,
 				6CB3121D1B68E35000B49DA5 /* Main.storyboard in Resources */,
 				6CB312221B68E35000B49DA5 /* LaunchScreen.xib in Resources */,
 				6CB3121F1B68E35000B49DA5 /* Images.xcassets in Resources */,

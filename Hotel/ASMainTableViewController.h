@@ -8,15 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ASSortedSegment) {
+    ASSortedDistance  = 0,
+    ASSortedFreeRooms = 1,
+    
+};
 
 
 @interface ASMainTableViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentControl;
-@property (strong, nonatomic)  UIActivityIndicatorView* indicator;
+@property (weak, nonatomic)    IBOutlet UITableView *tableView;
+@property (weak, nonatomic)    IBOutlet UISegmentedControl *segmentControl;
 
-@property (strong, nonatomic)  NSOperation*     operation;
+@property (strong, nonatomic)  UIActivityIndicatorView* indicator;
+@property (strong, nonatomic)  NSOperation*             operation;
 
 @property (strong, nonatomic)  NSMutableArray* arrayHotels;
 @property (strong, nonatomic)  NSMutableArray* sortingArrayHotels;

@@ -20,9 +20,9 @@
 
     self.labelName.text    = self.hotel.name;
     self.labelAddress.text = self.hotel.address;
-    self.labelStars.text   = [NSString stringWithFormat:@"Rating : %.ff",self.hotel.stars];
+    self.labelStars.text   = [NSString stringWithFormat:@"Rating : %.2f",self.hotel.stars];
     self.labelSuitesAvailability.text = [NSString stringWithFormat:@"Free rooms : %d",[self.hotel.suitesAvailabilityArray count]];
-    self.labelDistance.text = [NSString stringWithFormat:@"Distance : %.ff", _hotel.distance];
+    self.labelDistance.text = [NSString stringWithFormat:@"Distance : %.2f", _hotel.distance];
     
     UIImage* placeholder = [UIImage imageNamed:@"placeholder.png"];
     self.imageView.layer.cornerRadius = 13;

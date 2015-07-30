@@ -15,13 +15,6 @@
 #import "ASCustomCellMainTable.h"
 
 
-typedef NS_ENUM(NSInteger, ASSortedSegment) {
-    ASSortedDistance  = 0,
-    ASSortedFreeRooms = 1,
-
-};
-
-
 
 @interface ASMainTableViewController ()
 
@@ -35,19 +28,25 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    // Add UIActivityIndicatorView
     
     UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc]
                                               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     indicatorView.center = self.view.center;
     self.indicator       = indicatorView;
-   
     [self.view addSubview:self.indicator];
+   
+    
+    
     self.arrayHotels = [NSMutableArray array];
     
+    
+    // Parsing data
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.indicator startAnimating];
-        [self simpleJsonParsing2];
+        [self mainJsonParsing];
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
@@ -56,7 +55,6 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
         });
     });
     
-
     [self.segmentControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
     
 }
@@ -69,41 +67,15 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 #pragma mark - Parsing
 
--(ASHotel*) putDataInObject:(id) data {
-    
-    ASHotel *hotel       = [[ASHotel alloc]init];
-    
-    hotel.identifier     = [[data valueForKey:@"id"] doubleValue];
-    hotel.name           = [data  valueForKey:@"name"];
-    hotel.address        = [data  valueForKey:@"address"];
-    hotel.stars          = [[data valueForKey:@"stars"] doubleValue];
-    hotel.imageString    = [data valueForKey:@"image"];
-    hotel.distance       = [[data valueForKey:@"distance"] doubleValue];
-    NSString* tmpFreeRooms =  [data  valueForKey:@"suites_availability"];
-    hotel.suitesAvailabilityArray  = [tmpFreeRooms componentsSeparatedByString:@":"];
-    
-    return hotel;
-}
+// Тут уже после mainJsonParsing идет основной парсинг
 
-
--(void) printAllHotelInArray:(NSArray*) array{
-    
-    
-        
-        for (id obj in array) {
-            
-            if ([obj isKindOfClass:[ASHotel class]]) {
-                NSLog(@"Description = %@",[obj description]);
-            }
-        }
-    
-}
-
-- (void)simpleJsonParsing:(NSString*) requestString
+/* {  "id": 80899,
+      "name": "Americana Inn",
+      "address": "69 West 38th Street",
+      .......
+} */
+- (void)jsonParsingFromString:(NSString*) requestString
 {
-
-   // NSString *requestString = @"https://dl.dropboxusercontent.com/u/109052005/1/0777.json";
-   // NSString *requestString = @"https://dl.dropboxusercontent.com/s/5mssly9c1z78oqu/hotelList.json";
 
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:requestString]];
     NSError *error;
@@ -116,21 +88,29 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
     [self printAllHotelInArray:self.arrayHotels];
  
-
 }
 
-- (void)simpleJsonParsing2
+
+
+
+// Здесь получаем главный json , из него получаем массив с ссылками
+
+/* [ { "id"  : "https://dl.dropboxusercontent.com/s/iy6wsnsxq6qk7ok/40611.json"  },
+     { "id"  : "https://dl.dropboxusercontent.com/s/22bli0rvi3p4zns/80899.json"  },
+        ...
+        ...  ]*/
+
+- (void)mainJsonParsing
 {
-    
     
     NSString *requestString = @"https://dl.dropboxusercontent.com/s/pvqqh5crbrc8sqi/hotelList3.json";
 
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:requestString]];
-    
-    NSError *error;
-    NSDictionary *arrayJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSData*       data      = [NSData dataWithContentsOfURL:[NSURL URLWithString:requestString]];
+    NSError*      error;
+    NSDictionary* arrayJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
     
     NSMutableArray* arr = [NSMutableArray new];
+    
     
     for (NSDictionary *dict in arrayJSON)
     {
@@ -140,8 +120,9 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     }
     NSLog(@"arr = %@",arr);
     
+    
     for (NSString* str in arr) {
-        [self simpleJsonParsing:str];
+        [self jsonParsingFromString:str];
     }
     
     
@@ -150,9 +131,18 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 60;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [cell layoutIfNeeded];
+}
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ASDetailsViewController *vc2 = (ASDetailsViewController *)[storyboard  instantiateViewControllerWithIdentifier:@"ASDetailsViewController"];
@@ -165,10 +155,7 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 60;
-}
+
 
 #pragma mark - UITableViewDataSource
 
@@ -177,50 +164,16 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
     return 1;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    //return [self.arrayHotels count];
     return [self.sortingArrayHotels count];
 }
 
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [cell layoutIfNeeded];
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   /*
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
-                                        reuseIdentifier:CellIdentifier];
-        // cell.contentMode = UIViewContentModeScaleAspectFit;;
 
-    }
-    
-
-    NSString* urlPhoto   = (NSString*)[[self.sortingArrayHotels objectAtIndex:indexPath.row]image];
-    NSURL*    url        = [[NSURL alloc]initWithString:urlPhoto];
-    UIImage* placeholder = [UIImage imageNamed:@"placeholder.png"];
-
-    cell.textLabel.text       = [[self.sortingArrayHotels objectAtIndex:indexPath.row]name];
-    cell.detailTextLabel.text = (NSString*)[[self.sortingArrayHotels objectAtIndex:indexPath.row]address];
-   // cell.imageView.image = placeholder;
-     cell.imageView.contentMode = UIViewContentModeScaleAspectFit | UIViewContentModeCenter;
-    [cell.imageView setImageWithURL:url placeholderImage:placeholder];
-    //[cell.imageView setNeedsDisplay];
-    
-    cell.imageView.layer.cornerRadius = 17;
-    cell.imageView.layer.masksToBounds = YES;
-    
-    
-    //cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
-    */
-    
     
     static NSString *CellIdentifier = @"customCell";
     
@@ -240,10 +193,9 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
    
     cell.image.layer.cornerRadius = 20;
     cell.image.layer.masksToBounds = YES;
-    //cell.imageView.contentMode = UIViewContentModeScaleAspectFit | UIViewContentModeCenter;
+
     [cell.image setImageWithURL:url placeholderImage:placeholder];
 
-    
     return cell;
 }
 
@@ -307,6 +259,9 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 
 
 
+#pragma mark - Action
+
+
 
 - (IBAction)segmentControlAction:(UISegmentedControl *)sender {
    
@@ -318,5 +273,36 @@ typedef NS_ENUM(NSInteger, ASSortedSegment) {
 }
 
 
+#pragma mark - Helpers methods
+
+
+-(ASHotel*) putDataInObject:(id) data {
+    
+    ASHotel *hotel       = [[ASHotel alloc]init];
+    
+    hotel.identifier     = [[data valueForKey:@"id"] doubleValue];
+    hotel.name           = [data  valueForKey:@"name"];
+    hotel.address        = [data  valueForKey:@"address"];
+    hotel.stars          = [[data valueForKey:@"stars"] doubleValue];
+    hotel.imageString    = [data valueForKey:@"image"];
+    hotel.distance       = [[data valueForKey:@"distance"] doubleValue];
+    NSString* tmpFreeRooms =  [data  valueForKey:@"suites_availability"];
+    hotel.suitesAvailabilityArray  = [tmpFreeRooms componentsSeparatedByString:@":"];
+    
+    return hotel;
+}
+
+
+
+
+-(void) printAllHotelInArray:(NSArray*) array{
+    
+    for (id obj in array) {
+        if ([obj isKindOfClass:[ASHotel class]]) {
+            NSLog(@"Description = %@",[obj description]);
+        }
+    }
+    
+}
 
 @end
